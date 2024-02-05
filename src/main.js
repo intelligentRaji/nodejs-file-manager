@@ -8,6 +8,8 @@ import { list } from './commands/fs/list.js';
 import { INVALID_INPUT } from './errors/invalidInput.js';
 import { read } from './commands/fs/cat.js';
 import { create } from './commands/fs/add.js';
+import { move } from './commands/fs/mv.js';
+import { rename } from './commands/fs/rn.js';
 
 class FileManager {
   #operations = {
@@ -17,6 +19,8 @@ class FileManager {
     ls: list,
     cat: read,
     add: create,
+    mv: move,
+    rn: rename,
     '.exit': () => this.close(),
   };
 

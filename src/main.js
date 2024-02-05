@@ -2,10 +2,17 @@ import { operationSystem } from './commands/os.js';
 import { state } from './state/state.js';
 import { createInterface } from 'readline';
 import { parseCommand } from './utils/cli/parseCommand.js';
+import { up } from './commands/navigation/up.js';
+import { cd } from './commands/navigation/cd.js';
+import { list } from './commands/fs/list.js';
+import { INVALID_INPUT } from './errors/invalidInput.js';
 
 class FileManager {
   #operations = {
     os: operationSystem.action,
+    up,
+    cd,
+    ls: list,
     '.exit': () => this.close(),
   };
 
@@ -21,16 +28,16 @@ class FileManager {
     this.rl.on('close', () => this.close());
   }
 
-  onLine = (data) => {
+  onLine = async (data) => {
     try {
       const { commandName, args } = parseCommand(data);
       const operation = this.#operations[commandName];
 
       if (!operation) {
-        throw new Error(`Invalid input: unrecognized command "${commandName}"`);
+        throw new INVALID_INPUT(`Unrecognized command "${commandName}"`);
       }
 
-      operation(args);
+      await operation(args);
     } catch (err) {
       console.log(err.message);
     } finally {

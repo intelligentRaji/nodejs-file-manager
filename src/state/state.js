@@ -22,7 +22,7 @@ export class State {
   }
 
   set currentPath(path) {
-    if (!path.startsWith(this.#currentPath)) {
+    if (path.startsWith('C:\\')) {
       this.#currentPath = path;
     }
   }

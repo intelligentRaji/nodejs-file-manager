@@ -1,4 +1,5 @@
 import { EOL, cpus, homedir, userInfo } from 'os';
+import { INVALID_INPUT } from '../errors/invalidInput.js';
 
 export class Os {
   #operations = {
@@ -12,7 +13,7 @@ export class Os {
   action = (args) => {
     if (!args.length) {
       const flagNames = Object.keys(this.#operations).join(', ');
-      throw new Error(`Invalid input: "os" command should have at least on of these flags "${flagNames}"`);
+      throw new INVALID_INPUT(`"os" command should have at least one of these flags "${flagNames}"`);
     }
 
     const flags = args.map((arg) => arg.slice(2));
@@ -21,7 +22,7 @@ export class Os {
       const operation = this.#operations[flag];
 
       if (!operation) {
-        throw new Error(`Invalid input: unrecognized argument: --${flag}`);
+        throw new INVALID_INPUT(`Unrecognized argument: --${flag}`);
       }
 
       this.#operations[flag]();

@@ -1,16 +1,14 @@
-import { ENOENT, INVALID_INPUT } from '../../errors/errors.js';
+import { ENOENT } from '../../errors/enoent.js';
 import { state } from '../../state/state.js';
+import { checkAmountOfArguemnts } from '../../utils/checkAmountOfArguments.js';
 import { isExists } from '../../utils/isExists.js';
-import { isAbsolute, join } from 'path';
+import { parsePath } from '../../utils/parsePath.js';
 
 export async function cd(args) {
-  const amountOfArguments = 1;
-  if (args.length !== amountOfArguments) {
-    throw new INVALID_INPUT(`command should recieve ${amountOfArguments} argument`);
-  }
+  checkAmountOfArguemnts(args, 1);
 
   const path = args[0];
-  const destination = isAbsolute(path) ? path : join(state.currentPath, path);
+  const destination = parsePath(path);
 
   if (!(await isExists(destination))) {
     throw new ENOENT(destination);

@@ -1,5 +1,6 @@
 import { homedir } from 'os';
 import { parseArgs } from '../utils/cli/parseArguments.js';
+import { parse } from 'path';
 
 export class State {
   #username;
@@ -22,7 +23,7 @@ export class State {
   }
 
   set currentPath(path) {
-    if (path.startsWith('C:\\')) {
+    if (/C:\\/i.test(parse(path).root)) {
       this.#currentPath = path;
     }
   }

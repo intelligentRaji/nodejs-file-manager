@@ -6,6 +6,7 @@ import { up } from './commands/navigation/up.js';
 import { cd } from './commands/navigation/cd.js';
 import { list } from './commands/fs/list.js';
 import { INVALID_INPUT } from './errors/invalidInput.js';
+import { read } from './commands/fs/cat.js';
 
 class FileManager {
   #operations = {
@@ -13,6 +14,7 @@ class FileManager {
     up,
     cd,
     ls: list,
+    cat: read,
     '.exit': () => this.close(),
   };
 

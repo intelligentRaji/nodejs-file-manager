@@ -1,6 +1,4 @@
-import { ENOENT } from '../../errors/enoent.js';
 import { checkAmountOfArguemnts } from '../../utils/checkAmountOfArguments.js';
-import { isExists } from '../../utils/isExists.js';
 import { parsePath } from '../../utils/parsePath.js';
 import { move } from './mv.js';
 import { dirname, join } from 'path';

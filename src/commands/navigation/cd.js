@@ -1,18 +1,18 @@
-import { ERRORS } from '../../constants/errors';
-import { state } from '../../state/state';
-import { isExists } from '../../utils/isExists';
-import { resolve } from 'path';
+import { ENOENT } from '../../errors/enoent.js';
+import { state } from '../../state/state.js';
+import { checkAmountOfArguemnts } from '../../utils/checkAmountOfArguments.js';
+import { isExists } from '../../utils/isExists.js';
+import { parsePath } from '../../utils/parsePath.js';
 
-export async function cd(path) {
-  try {
-    const destination = resolve(state._currentPath, path);
+export async function cd(args) {
+  checkAmountOfArguemnts(args, 1);
 
-    if (!(await isExists(destination))) {
-      throw new Error(ERRORS.ENOENT(destination));
-    }
+  const path = args[0];
+  const destination = parsePath(path);
 
-    state._currentPath = destination;
-  } catch (err) {
-    console.log(err.message);
+  if (!(await isExists(destination))) {
+    throw new ENOENT(destination);
   }
+
+  state.currentPath = destination;
 }

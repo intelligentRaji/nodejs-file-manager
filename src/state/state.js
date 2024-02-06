@@ -1,27 +1,30 @@
 import { homedir } from 'os';
 import { parseArgs } from '../utils/cli/parseArguments.js';
+import { parse } from 'path';
 
 export class State {
+  #username;
+  #currentPath = homedir();
+
   constructor(data) {
-    this._username = data.username;
-    this._currentPath = homedir();
+    this.#username = data.username;
   }
 
   get username() {
-    return this._username;
+    return this.#username;
   }
 
   set username(name) {
-    this._username = name;
+    this.#username = name;
   }
 
   get currentPath() {
-    return this._currentPath;
+    return this.#currentPath;
   }
 
   set currentPath(path) {
-    if (!path.startsWith(this._currentPath)) {
-      this._currentPath = path;
+    if (/C:\\/i.test(parse(path).root)) {
+      this.#currentPath = path;
     }
   }
 }

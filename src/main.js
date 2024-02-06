@@ -11,6 +11,7 @@ import { create } from './commands/fs/add.js';
 import { move } from './commands/fs/mv.js';
 import { renameFile } from './commands/fs/rn.js';
 import { copy } from './commands/fs/cp.js';
+import { remove } from './commands/fs/rm.js';
 
 class FileManager {
   #operations = {
@@ -23,6 +24,7 @@ class FileManager {
     mv: move,
     rn: renameFile,
     cp: copy,
+    rm: remove,
     '.exit': () => this.close(),
   };
 
@@ -48,13 +50,14 @@ class FileManager {
       }
 
       await operation(args);
-    } catch (err) {
-      console.log(err.message);
-    } finally {
+
       if (!this.closed) {
         process.stdout.write(`You are currently in ${state.currentPath}\n`);
         this.rl.prompt('> ');
       }
+    } catch (err) {
+      console.log(err.message);
+      this.rl.prompt('> ');
     }
   };
 

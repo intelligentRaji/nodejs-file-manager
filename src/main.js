@@ -12,6 +12,8 @@ import { move } from './commands/fs/mv.js';
 import { renameFile } from './commands/fs/rn.js';
 import { copy } from './commands/fs/cp.js';
 import { remove } from './commands/fs/rm.js';
+import { compress } from './commands/zip/compress.js';
+import { decompress } from './commands/zip/decompress.js';
 
 class FileManager {
   #operations = {
@@ -25,6 +27,8 @@ class FileManager {
     rn: renameFile,
     cp: copy,
     rm: remove,
+    compress,
+    decompress,
     '.exit': () => this.close(),
   };
 

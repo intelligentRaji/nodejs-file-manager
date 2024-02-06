@@ -10,6 +10,7 @@ import { read } from './commands/fs/cat.js';
 import { create } from './commands/fs/add.js';
 import { move } from './commands/fs/mv.js';
 import { rename } from './commands/fs/rn.js';
+import { copy } from './commands/fs/cp.js';
 
 class FileManager {
   #operations = {
@@ -21,6 +22,7 @@ class FileManager {
     add: create,
     mv: move,
     rn: rename,
+    cp: copy,
     '.exit': () => this.close(),
   };
 

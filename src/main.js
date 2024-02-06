@@ -14,6 +14,7 @@ import { copy } from './commands/fs/cp.js';
 import { remove } from './commands/fs/rm.js';
 import { compress } from './commands/zip/compress.js';
 import { decompress } from './commands/zip/decompress.js';
+import { hash } from './commands/hash/hash.js';
 
 class FileManager {
   #operations = {
@@ -29,6 +30,7 @@ class FileManager {
     rm: remove,
     compress,
     decompress,
+    hash,
     '.exit': () => this.close(),
   };
 

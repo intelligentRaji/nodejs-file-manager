@@ -1,5 +1,6 @@
 import { EOL, cpus, homedir, userInfo } from 'os';
 import { INVALID_INPUT } from '../errors/invalidInput.js';
+import { checkAmountOfArguemnts } from '../utils/checkAmountOfArguments.js';
 
 export class Os {
   #operations = {
@@ -16,17 +17,17 @@ export class Os {
       throw new INVALID_INPUT(`"os" command should have at least one of these flags "${flagNames}"`);
     }
 
-    const flags = args.map((arg) => arg.slice(2));
+    checkAmountOfArguemnts(args, 1);
 
-    flags.forEach((flag) => {
-      const operation = this.#operations[flag];
+    const flag = args[0].slice(2);
 
-      if (!operation) {
-        throw new INVALID_INPUT(`Unrecognized argument: --${flag}`);
-      }
+    const operation = this.#operations[flag];
 
-      this.#operations[flag]();
-    });
+    if (!operation) {
+      throw new INVALID_INPUT(`Unrecognized argument: --${flag}`);
+    }
+
+    this.#operations[flag]();
   };
 
   #eol() {

@@ -1,17 +1,10 @@
-import { checkAmountOfArguemnts } from '../../utils/checkAmountOfArguments.js';
-import { isExists } from '../../utils/isExists.js';
-import { ENOENT } from '../../errors/enoent.js';
-import { rename } from 'fs/promises';
 import { parsePath } from '../../utils/parsePath.js';
+import { copy } from './cp.js';
+import { unlink } from 'fs/promises';
 
 export async function move(args) {
-  checkAmountOfArguemnts(args, 2);
+  const filename = parsePath(args[0]);
 
-  const [path, destination] = args.slice(0, 2).map((path) => parsePath(path));
-
-  if (!(await isExists(path))) {
-    throw new ENOENT(path);
-  }
-
-  rename(path, destination);
+  await copy(args);
+  await unlink(filename);
 }
